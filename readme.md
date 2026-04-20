@@ -13,7 +13,7 @@ MagicStick is a project to create a free flywheel pendulum on a stick that can s
 - **Motors:** 3x 4015 or 5010 brushless motors
 - **Motor Controllers:** 3x Simple FOC controllers
 - **Power:** 6x 18650 lithium-ion cells
-- **Microcontroller:** 1x BLE Sense
+- **Microcontroller:** 1x Nano33 RP2040
 
 ## Status
 
