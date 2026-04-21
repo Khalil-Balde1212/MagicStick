@@ -117,14 +117,13 @@ class FlywheelPendulumModel:
         theta_new = theta + theta_dot_new * self.dt
         phi_new = phi + phi_dot_new * self.dt
         
-        # Clamp theta to limits
-        if self.theta_min is not None and self.theta_max is not None:
-            if theta_new < self.theta_min:
-                theta_new = self.theta_min
-                theta_dot_new = 0.0  # stop at limit
-            elif theta_new > self.theta_max:
-                theta_new = self.theta_max
-                theta_dot_new = 0.0  # stop at limit
+        # Clamp theta to limits if limits are set
+        if self.theta_min is not None and theta_new < self.theta_min:
+            theta_new = self.theta_min
+            theta_dot_new = max(0.0, theta_dot_new)  # stop at limit (allow only positive velocity if at min)
+        elif self.theta_max is not None and theta_new > self.theta_max:
+            theta_new = self.theta_max
+            theta_dot_new = min(0.0, theta_dot_new)  # stop at limit (allow only negative velocity if at max)
         
         # phi wrap to [-pi, pi] for better interpretability (not strictly necessary for dynamics)
         phi_new = (phi_new + np.pi) % (2 * np.pi) - np.pi
